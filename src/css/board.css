@@ -1,0 +1,44 @@
+.square-matrix {
+  text-align: center;
+  background-color: #0b233f;
+  padding: 40px;
+  border-radius: 38px;
+  border-style: dashed;
+  transform: translate(-50%, -50%);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  height: 52%;
+  width: 41%;
+  color: white;
+  border: dashed 2px #253952;
+}
+
+.square-bord {
+  padding: 5px;
+}
+
+.square {
+  background-color: #253952;
+  font-size: 50px;
+  font-weight: bold;
+  text-align: center;
+  border-style: dashed;
+  width: 184px;
+  height: 105px;
+  color: #fff;
+  border: dashed 2px #5f6d7f;
+}
+
+button:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.col-sm-4 {
+  margin: -5px !important;
+}
+
+.game-count-panel {
+  margin-top: 10%;
+}

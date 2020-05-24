@@ -1,0 +1,47 @@
+.result {
+    font-family: "adobe-clean", sans-serif;
+    text-align: center;
+}
+
+.result .caption {
+    font-size: 18px;
+    margin-top: 6%;
+}
+
+.result .center-box {
+    background-color: #253952;
+    margin-top: 10%;
+    border-radius: 30px;
+    transform: translate(-50%, -50%);
+    position: absolute;
+    top: 48%;
+    left: 50%;
+    height: 25vh;
+    width: 22vh;
+    color: white;
+    border: 2px solid #e49207;
+    text-align: -webkit-center;
+}
+
+.result .center-box .player-id {
+    font-size: 10px;
+    font-weight: bold;
+    color: #e49207;
+    text-align: center;
+    margin-top: 15%;
+}
+
+.result .center-box .player-name {
+    font-size: 18px;
+    color: white;
+    text-align: center;
+    margin-top: 10%;
+}
+
+.result .center-box .symbol {
+    font-size: 85px;
+    font-weight: bold;
+    color: #ffffff;
+    text-align: center;
+    margin-top: -10%;
+}

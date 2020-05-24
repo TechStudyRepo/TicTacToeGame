@@ -1,0 +1,17 @@
+body {
+  margin: 0;
+  font-family: "adobe-clean", sans-serif;
+}
+
+.home-page {
+  background-color: #0b233f;
+  height: 100vh;
+  color: White;
+}
+
+.app-text {
+  padding: 8vh;
+  width: 22vh;
+  font-size: 12px;
+  font-weight: bold;
+}

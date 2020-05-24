@@ -1,0 +1,90 @@
+.game {
+    font-family: "adobe-clean", sans-serif;
+}
+
+.player-head {
+    font-size: 8px;
+    color: #e49207;
+    margin-top: -27px;
+    text-align: center;
+}
+
+.player-name {
+    font-size: 12px;
+    margin-top: 8px;
+    color: #ffffff;
+    text-align: center;
+    width: fit-content;
+}
+
+.player-symbol {
+    font-size: 42px;
+    font-weight: bold;
+    color: #ffffff;
+    text-align: center;
+}
+
+.player1-stat {
+    background-color: #253952;
+    padding: 35px;
+    border-radius: 20px;
+    transform: translate(-50%, -50%);
+    position: absolute;
+    top: 48%;
+    left: 16%;
+    height: 17vh;
+    width: 16vh;
+    color: white;
+    text-align: -webkit-center;
+}
+
+.player1-turn-text {
+    color: #e49207;
+    position: absolute;
+    top: 34%;
+}
+
+.player1-win-count {
+    position: absolute;
+    top: 55%;
+    left: 13%;
+}
+
+.win-count-on {
+    font-size: 42px;
+    color: #ffffff;
+}
+
+.win-count-off {
+    font-size: 42px;
+    color: #253952;
+}
+
+.player2-turn-text {
+    color: #e49207;
+    position: absolute;
+    top: 34%;
+    right: 15%;
+}
+
+.player2-win-count {
+    position: absolute;
+    top: 55%;
+    right: 14%;
+}
+
+.player2-stat {
+    background-color: #253952;
+    padding: 35px;
+    border-radius: 20px;
+    transform: translate(-50%, -50%);
+    position: absolute;
+    top: 48%;
+    top: 48%;
+    right: 9%;
+    height: 17vh;
+    width: 16vh;
+    color: white;
+    border: solid 2px #253952;
+    text-align: -webkit-center;
+}
