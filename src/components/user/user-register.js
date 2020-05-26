@@ -31,6 +31,7 @@ function UserForm() {
                     <div>PLAYER 1</div>
                     <Input className="form-control"
                         name="player1"
+                        id="p1"
                         placeholder="Player 1"
                         onChange={e => setPlayer1Value(e.target.value)} ></Input>
                 </div>
@@ -38,6 +39,7 @@ function UserForm() {
                     <div>PLAYER 2</div>
                     <Input className="form-control"
                         name="player2"
+                        id="p2"
                         placeholder="Player 2"
                         onChange={e => setPlayer2Value(e.target.value)}></Input>
                 </div>
