@@ -16,6 +16,7 @@
 
 .square-bord {
   padding: 5px;
+  width: 100%;
 }
 
 .square {
@@ -35,10 +36,6 @@ button:focus {
   box-shadow: none !important;
 }
 
-.col-sm-4 {
+.col-md-4 {
   margin: -5px !important;
-}
-
-.game-count-panel {
-  margin-top: 10%;
 }

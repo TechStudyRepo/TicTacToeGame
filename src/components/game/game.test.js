@@ -6,7 +6,7 @@ import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
 
 import Game from './game';
-import Player1Details from './player1-details';
+import PlayerDetails from './player-details';
 
 configure({ adapter: new Adapter() });
 
@@ -36,7 +36,7 @@ describe('Result Component', () => {
         const wrapper = mount(<Provider store={store}>
             <Game />
         </Provider>);
-        expect(wrapper.children(Player1Details).length).toEqual(0);
+        expect(wrapper.children(PlayerDetails).length).toEqual(0);
     });
 
     test('Test Snapshot', () => {

@@ -1,6 +1,10 @@
 import React from 'react'
 import { useSelector } from 'react-redux';
 
+
+// constants
+import { CONSTANTS } from '../../constants/appConstants';
+
 // import css
 import "../../css/board.css";
 import "../../css/result.css";
@@ -8,8 +12,7 @@ import "../../css/result.css";
 export default function Result() {
     const result = useSelector((state) => state.result.player),
         user = useSelector((state) => state.registerUser.user);
-        console.log("result", result);
-        
+    // console.log("result", result);
 
     return (
         <div className="square-matrix" style={{ height: "40%", width: "20%", padding: '12px' }}>
@@ -20,11 +23,16 @@ export default function Result() {
                     </div>
                     <div className="center-box">
                         <div className="player-id">
-                            {result.toUpperCase()}
+                            {
+                                result === CONSTANTS.X ?
+                                    <span>Player 1</span>
+                                    :
+                                    <span>Player 2</span>
+                            }
                         </div>
                         <div className="player-name">
                             {
-                                result.toUpperCase() === "PLAYER 1" ?
+                                result === CONSTANTS.X ?
                                     <div>{user.user1}</div>
                                     :
                                     <div>{user.user2}</div>
@@ -32,7 +40,7 @@ export default function Result() {
                         </div>
                         <div className="symbol">
                             {
-                                result.toUpperCase() === "PLAYER 1" ?
+                                result === CONSTANTS.X ?
                                     <div>X</div>
                                     :
                                     <div>O</div>

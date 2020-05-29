@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
 
 // custom component
-import Player1Details from './player1-details';
-import Player2Details from './player2-details';
-import Board from '../board/bord';
+import PlayerDetails from './player-details';
+import Board from '../board/board';
+
+// constants
+import { CONSTANTS } from '../../constants/appConstants';
 
 // import actions
 import { setResult } from '../../actions/result/result-action';
@@ -15,12 +17,10 @@ import { setResult } from '../../actions/result/result-action';
 import '../../css/game.css'
 
 function Game() {
-    const user = useSelector((state) => state.registerUser.user),
-        dispatch = useDispatch(),
+    const dispatch = useDispatch(),
         history = useHistory(),
         [boardMatrix, setMetrix] = useState(Array(9).fill(null)),
         [isXNext, setNext] = useState(true),
-        [gameCount, setGameCount] = useState(0),
         [player1winCount, setPlayer1WinCount] = useState(0),
         [player2winCount, setPlayer2WinCount] = useState(0),
         [player1WinState, setPlayer1WinState] = useState(null),
@@ -34,7 +34,7 @@ function Game() {
                 winnerResult = calculateWinner(squares),
                 { winner } = winnerResult === null ? { winner: null } : winnerResult;
             // chek for not rep 
-            if (winner || squares[i] !== null || gameCount === null) {
+            if (winner || squares[i] !== null) {
                 return
             }
             squares[i] = isXNext ? 'X' : 'O';
@@ -50,37 +50,37 @@ function Game() {
 
     // runs on every update of Game - step
     useEffect(() => {
-        // check if there is a winner with best of 6 (maxGameCount)
-        if (gameCount === maxGameCount) {
+        // check if there is a winner with best of 6 
+        if ((player1winCount !== 0 || player2winCount !== 0) &&
+            (player1winCount === maxGameCount || player2winCount === maxGameCount)) {
+
             if (player1winCount === player2winCount) {
                 // navigate 
                 setGameStepWinState('');
-                setPlayer1WinState("DRAW");
-                setPlayer2WinState("DRAW");
-                setNext(true);
-                setGameCount(null);
+                setPlayer1WinState(CONSTANTS.DRAW);
+                setPlayer2WinState(CONSTANTS.DRAW);
+                setNext('');
             }
             else if (player1winCount > player2winCount) {
-                setPlayer1WinState("WINNER");
-                setNext(true);
-                setGameCount(null);
+                setPlayer1WinState(CONSTANTS.WINNER);
+                setNext('');
                 // navigate to Winner Page
                 setTimeout(() => {
-                    dispatch(setResult(history, 'player 1'));
+                    dispatch(setResult(history, CONSTANTS.X));
                 }, 2000);
             }
             else if (player2winCount > player1winCount) {
-                setPlayer2WinState("WINNER");
-                setNext(true);
-                setGameCount(null);
+                setPlayer2WinState(CONSTANTS.WINNER);
+                setNext('');
                 // navigate to Winner Page
                 setTimeout(() => {
-                    dispatch(setResult(history, 'player 2'));
+                    dispatch(setResult(history, CONSTANTS.O));
                 }, 2000);
             }
         }
-        // freez the game 
-        else if (gameCount === null) {
+        // Freez the game
+        else if ((player1winCount !== 0 || player2winCount !== 0) &&
+            (player1winCount === maxGameCount || player2winCount === maxGameCount)) {
 
         }
         else if (gameStepWinState === null) {
@@ -92,10 +92,9 @@ function Game() {
                 const result = squares.some(el => el === null);
                 // Draw case
                 if (!result) {
-                    setGameCount(gameCount + 1);
-                    setGameStepWinState('DRAW');
+                    setGameStepWinState(CONSTANTS.DRAW);
                     setGameStepWinMatrix(null);
-                    if ((gameCount + 1) !== maxGameCount) {
+                    if ((player2winCount + 1) || (player2winCount + 1) !== maxGameCount) {
                         setTimeout(() => {
                             clearGame();
                         }, 3000);
@@ -104,24 +103,22 @@ function Game() {
             }
             else if (winner !== null) {
                 // Player 1 - win case
-                if (winner === 'X') {
-                    setGameCount(gameCount + 1)
+                if (winner === CONSTANTS.X) {
                     setGameStepWinState(winner);
                     setGameStepWinMatrix(matchedMatrix);
                     setPlayer1WinCount(player1winCount + 1);
-                    if ((gameCount + 1) !== maxGameCount) {
+                    if ((player1winCount + 1) !== maxGameCount) {
                         setTimeout(() => {
                             clearGame();
                         }, 3000);
                     }
                 }
                 // player 2 win case
-                else if (winner === 'O') {
-                    setGameCount(gameCount + 1)
+                else if (winner === CONSTANTS.O) {
                     setGameStepWinState(winner);
                     setGameStepWinMatrix(matchedMatrix);
                     setPlayer2WinCount(player2winCount + 1);
-                    if ((gameCount + 1) !== maxGameCount) {
+                    if ((player2winCount + 1) !== maxGameCount) {
                         setTimeout(() => {
                             clearGame();
                         }, 3000);
@@ -133,26 +130,27 @@ function Game() {
 
     return (
         <div className="game">
-            <Player1Details user={user.user1}
+            <PlayerDetails
+                player={CONSTANTS.X}
                 trun={isXNext}
                 winCount={player1winCount}
                 winState={player1WinState}
-                winGameStep={gameStepWinState}>
-            </Player1Details>
+                winGameStep={gameStepWinState}
+            />
             <Board onClick={(i) => handleClick(i)}
-                squres={boardMatrix}
-                gameCount={gameCount}
+                squares={boardMatrix}
                 winStateP1={player1WinState}
                 winStateP2={player2WinState}
                 winGameStep={gameStepWinState}
                 gameStepWinMatrix={gameStepWinMatrix}>
             </Board>
-            <Player2Details user={user.user2}
+            <PlayerDetails
+                player={CONSTANTS.O}
                 trun={isXNext}
                 winCount={player2winCount}
                 winState={player2WinState}
-                winGameStep={gameStepWinState}>
-            </Player2Details>
+                winGameStep={gameStepWinState}
+            />
         </div >
 
     )
