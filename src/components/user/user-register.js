@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, Input } from 'reactstrap';
 
 import { useDispatch } from 'react-redux';
@@ -20,6 +20,16 @@ function UserForm() {
             e.preventDefault();
             dispatch(addUser(history, player1, player2))
         }
+
+    // First Time F-Component is mounted 
+    useEffect(() => {
+        console.log("UserForm Component is mounted 1st Time");
+    }, [])
+
+    // Runs on every update - no argument
+    useEffect(() => {
+        console.log("UserForm Component- Update");
+    })
 
     return (
         <div className="user-form">

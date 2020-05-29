@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
@@ -48,85 +48,88 @@ function Game() {
             setGameStepWinState(null)
         }
 
-    // check if there is a winner with best of 6 (maxGameCount)
-    if (gameCount === maxGameCount) {
-        if (player1winCount === player2winCount) {
-            // navigate 
-            setGameStepWinState('');
-            setPlayer1WinState("DRAW");
-            setPlayer2WinState("DRAW");
-            setNext(true);
-            setGameCount(null);
+    // runs on every update of Game - step
+    useEffect(() => {
+        // check if there is a winner with best of 6 (maxGameCount)
+        if (gameCount === maxGameCount) {
+            if (player1winCount === player2winCount) {
+                // navigate 
+                setGameStepWinState('');
+                setPlayer1WinState("DRAW");
+                setPlayer2WinState("DRAW");
+                setNext(true);
+                setGameCount(null);
+            }
+            else if (player1winCount > player2winCount) {
+                setPlayer1WinState("WINNER");
+                setNext(true);
+                setGameCount(null);
+                // navigate to Winner Page
+                setTimeout(() => {
+                    dispatch(setResult(history, 'player 1'));
+                }, 2000);
+            }
+            else if (player2winCount > player1winCount) {
+                setPlayer2WinState("WINNER");
+                setNext(true);
+                setGameCount(null);
+                // navigate to Winner Page
+                setTimeout(() => {
+                    dispatch(setResult(history, 'player 2'));
+                }, 2000);
+            }
         }
-        else if (player1winCount > player2winCount) {
-            setPlayer1WinState("WINNER");
-            setNext(true);
-            setGameCount(null);
-            // navigate to Winner Page
-            setTimeout(() => {
-                dispatch(setResult(history, 'player 1'));
-            }, 2000);
-        }
-        else if (player2winCount > player1winCount) {
-            setPlayer2WinState("WINNER");
-            setNext(true);
-            setGameCount(null);
-            // navigate to Winner Page
-            setTimeout(() => {
-                dispatch(setResult(history, 'player 2'));
-            }, 2000);
-        }
-    }
-    // freez the game 
-    else if (gameCount === null) {
+        // freez the game 
+        else if (gameCount === null) {
 
-    }
-    else if (gameStepWinState === null) {
-        const squares = boardMatrix.slice(),
-            winnerResult = calculateWinner(squares),
-            { winner, matchedMatrix } = winnerResult === null ? { winner: null, matchedMatrix: null } : winnerResult;
+        }
+        else if (gameStepWinState === null) {
+            const squares = boardMatrix.slice(),
+                winnerResult = calculateWinner(squares),
+                { winner, matchedMatrix } = winnerResult === null ? { winner: null, matchedMatrix: null } : winnerResult;
 
-        if (winner === null) {
-            const result = squares.some(el => el === null);
-            // Draw case
-            if (!result) {
-                setGameCount(gameCount + 1);
-                setGameStepWinState('DRAW');
-                setGameStepWinMatrix(null);
-                if ((gameCount + 1) !== maxGameCount) {
-                    setTimeout(() => {
-                        clearGame();
-                    }, 3000);
+            if (winner === null) {
+                const result = squares.some(el => el === null);
+                // Draw case
+                if (!result) {
+                    setGameCount(gameCount + 1);
+                    setGameStepWinState('DRAW');
+                    setGameStepWinMatrix(null);
+                    if ((gameCount + 1) !== maxGameCount) {
+                        setTimeout(() => {
+                            clearGame();
+                        }, 3000);
+                    }
+                }
+            }
+            else if (winner !== null) {
+                // Player 1 - win case
+                if (winner === 'X') {
+                    setGameCount(gameCount + 1)
+                    setGameStepWinState(winner);
+                    setGameStepWinMatrix(matchedMatrix);
+                    setPlayer1WinCount(player1winCount + 1);
+                    if ((gameCount + 1) !== maxGameCount) {
+                        setTimeout(() => {
+                            clearGame();
+                        }, 3000);
+                    }
+                }
+                // player 2 win case
+                else if (winner === 'O') {
+                    setGameCount(gameCount + 1)
+                    setGameStepWinState(winner);
+                    setGameStepWinMatrix(matchedMatrix);
+                    setPlayer2WinCount(player2winCount + 1);
+                    if ((gameCount + 1) !== maxGameCount) {
+                        setTimeout(() => {
+                            clearGame();
+                        }, 3000);
+                    }
                 }
             }
         }
-        else if (winner !== null) {
-            // Player 1 - win case
-            if (winner === 'X') {
-                setGameCount(gameCount + 1)
-                setGameStepWinState(winner);
-                setGameStepWinMatrix(matchedMatrix);
-                setPlayer1WinCount(player1winCount + 1);
-                if ((gameCount + 1) !== maxGameCount) {
-                    setTimeout(() => {
-                        clearGame();
-                    }, 3000);
-                }
-            }
-            // player 2 win case
-            else if (winner === 'O') {
-                setGameCount(gameCount + 1)
-                setGameStepWinState(winner);
-                setGameStepWinMatrix(matchedMatrix);
-                setPlayer2WinCount(player2winCount + 1);
-                if ((gameCount + 1) !== maxGameCount) {
-                    setTimeout(() => {
-                        clearGame();
-                    }, 3000);
-                }
-            }
-        }
-    }
+    })
 
     return (
         <div className="game">
